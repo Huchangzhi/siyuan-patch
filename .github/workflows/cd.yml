@@ -4,7 +4,19 @@ on:
   push:
     tags:
       - '*-dev*'
+      - 'v*'  # 添加正式版标签支持
   workflow_dispatch:
+    inputs:
+      build_desktop:
+        description: '构建桌面客户端 (Windows/macOS/Linux)'
+        required: false
+        default: 'true'
+        type: boolean
+      build_docker:
+        description: '构建 Docker 镜像'
+        required: false
+        default: 'false'
+        type: boolean
 
 # ref https://docs.github.com/zh/actions/learn-github-actions/variables
 env:
