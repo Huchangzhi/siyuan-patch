@@ -180,13 +180,18 @@ jobs:
           path: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app/build/siyuan-${{ needs.get_version.outputs.version }}-${{ matrix.config.suffix }}
           retention-days: 7
 
+      - name: Normalize workspace path
+        id: ws
+        run: echo "path=${GITHUB_WORKSPACE//\\//}" >> $GITHUB_OUTPUT
+        shell: bash
+
       - name: Upload to Release
         if: ${{ github.event.inputs.upload_release == 'true' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.get_version.outputs.release_tag }}
           name: ${{ needs.get_version.outputs.release_tag }}
-          files: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app/build/siyuan-${{ needs.get_version.outputs.version }}-${{ matrix.config.suffix }}
+          files: ${{ steps.ws.outputs.path }}/go/src/github.com/${{ github.repository }}/app/build/siyuan-${{ needs.get_version.outputs.version }}-${{ matrix.config.suffix }}
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
           fail_on_unmatched_files: false
