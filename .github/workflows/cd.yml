@@ -186,6 +186,11 @@ jobs:
         run: npm install -g ${{ needs.create_release.outputs.packageManager }}
         working-directory: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app
 
+      - name: Configure pnpm for Windows (avoid MAX_PATH with NSIS)
+        if: "contains( matrix.config.goos, 'windows')"
+        run: echo "node-linker=hoisted" >> .npmrc
+        working-directory: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app
+
       - name: Install Node Dependencies
         run: pnpm install --no-frozen-lockfile
         working-directory: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app
