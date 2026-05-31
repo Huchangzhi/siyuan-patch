@@ -242,6 +242,8 @@ jobs:
       - name: Building Electron App
         run: pnpm run ${{ matrix.config.electron_args }}
         working-directory: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
       - name: Upload Release
         uses: actions/upload-release-asset@v1
