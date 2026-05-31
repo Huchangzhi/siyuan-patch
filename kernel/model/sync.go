@@ -255,11 +255,7 @@ func checkSync(boot, exit, byHand bool) bool {
 			return false
 		}
 	case conf.ProviderWebDAV, conf.ProviderS3, conf.ProviderLocal:
-		if !IsPaidUser() {
-			Conf.Sync.Enabled = false
-			Conf.Save()
-			return false
-		}
+		// VIP check removed - allow all users to use WebDAV/S3/Local sync
 	}
 
 	if 7 < autoSyncErrCount && !byHand {

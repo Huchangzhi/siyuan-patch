@@ -745,7 +745,7 @@ func Close(force, setCurrentWorkspace bool, execInstallPkg int) (exitCode int) {
 
 	if !force {
 		if Conf.Sync.Enabled && 3 != Conf.Sync.Mode &&
-			((IsSubscriber() && conf.ProviderSiYuan == Conf.Sync.Provider) || conf.ProviderSiYuan != Conf.Sync.Provider) {
+			((IsSubscriber() && conf.ProviderSiYuan == Conf.Sync.Provider) || (IsPaidUser() && conf.ProviderSiYuan != Conf.Sync.Provider)) {
 			syncData(true, false)
 			if 0 != ExitSyncSucc {
 				exitCode = 1
@@ -1018,15 +1018,7 @@ func IsSubscriber() bool {
 }
 
 func IsPaidUser() bool {
-	if IsSubscriber() {
-		return true
-	}
-
-	u := Conf.GetUser()
-	if nil == u {
-		return false
-	}
-	return 1 == u.UserSiYuanOneTimePayStatus
+	return true
 }
 
 const (

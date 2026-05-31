@@ -1,41 +1,113 @@
-# Binaries for programs and plugins
+```
+# Dependencies
+vendor/
+
+# Build artifacts
 *.exe
-!app/elevator/elevator-*.exe
 *.dll
 *.so
-*.dylib
-*.aar
-*.jar
-*.syso
-.DS_Store
-.eslintcache
-app/node_modules
-app/stage/build
-app/build
-app/src/types/dist
-app/kernel*
-app/SiYuan-Kernel
-ios
-pprof
-
-# Test binary, build with `go test -c`
-*.test
-
-# Output of the go coverage tool, specifically when used with LiteIDE
+*.a
+*.o
+*.obj
 *.out
-electron/dist
+dist/
+build/
+target/
 
-# IDE
-.idea/
+# Environment
+.env
+.env.local
+*.env.*
+
+# Logs
+*.log
+
+# Editor/IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
 
-# Log
-logs
-*.log*
+# OS
+.DS_Store
+Thumbs.db
 
-# NPM Package
-package-lock.json
-yarn.lock
+# Coverage
+coverage/
+htmlcov/
+.coverage
 
-# Workflows
-**/__pycache__
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.PyInstaller/
+.pytest_cache/
+.mypy_cache/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Go
+*.exe
+*.test
+*.prof
+cover.out
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# Gradle
+.gradle/
+build/
+
+# C/C++
+*.o
+*.ko
+*.so
+*.ilk
+*.pdb
+*.lib
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Compression
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```
