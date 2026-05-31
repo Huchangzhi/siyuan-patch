@@ -36,6 +36,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.value }}
       packageManager: ${{ steps.packageManager.outputs.value }}
+      release_tag: ${{ steps.release_tag.outputs.tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -51,6 +52,10 @@ jobs:
         id: packageManager
         with:
           cmd: "jq .packageManager ${{ env.package_json }} -r"
+
+      - name: Generate release tag
+        id: release_tag
+        run: echo "tag=v${{ steps.version.outputs.value }}-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
   # 构建桌面客户端
   build_desktop:
@@ -177,8 +182,12 @@ jobs:
         if: ${{ github.event.inputs.upload_release == 'true' }}
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ needs.get_version.outputs.release_tag }}
+          name: ${{ needs.get_version.outputs.release_tag }}
           files: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app/build/siyuan-${{ needs.get_version.outputs.version }}-${{ matrix.config.suffix }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
+          fail_on_unmatched_files: false
 
   # 构建 Docker 镜像
   build_docker:
