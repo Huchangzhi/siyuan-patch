@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM node:21 AS node-build
 ARG NPM_REGISTRY=
 
 WORKDIR /app
-ADD app/package.json app/pnpm* app/.npmrc .
+ADD app/package.json app/pnpm* .
 
 RUN <<EORUN
 #!/bin/bash -e
