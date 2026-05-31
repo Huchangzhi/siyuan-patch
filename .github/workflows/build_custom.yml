@@ -143,6 +143,7 @@ jobs:
         working-directory: ${{ github.workspace }}/go/src/github.com/${{ github.repository }}/app
 
       - name: Clean Build Directories
+        shell: bash
         run: |
           rm -rf app/build app/kernel-linux app/kernel app/kernel-darwin app/kernel-darwin-arm64
 
