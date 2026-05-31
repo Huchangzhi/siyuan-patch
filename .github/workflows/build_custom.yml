@@ -214,20 +214,19 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Determine Docker Tags
-        id: tags
-        run: |
-          TAGS="latest"
-          if [ -n "${{ github.event.inputs.docker_tag }}" ]; then
-            TAGS="${TAGS},${{ github.event.inputs.docker_tag }}"
-          else
-            TAGS="${TAGS},v${{ needs.get_version.outputs.version }}"
-          fi
-          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
-
       - name: Build and Push
         run: |
+          TAGS=("latest")
+          if [ -n "${{ github.event.inputs.docker_tag }}" ]; then
+            TAGS+=("${{ github.event.inputs.docker_tag }}")
+          else
+            TAGS+=("v${{ needs.get_version.outputs.version }}")
+          fi
+          TAG_ARGS=()
+          for tag in "${TAGS[@]}"; do
+            TAG_ARGS+=("-t" "${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.docker_hub_repo }}:${tag}")
+          done
           docker buildx build --push \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.docker_hub_repo }}:${{ steps.tags.outputs.tags }} \
+            "${TAG_ARGS[@]}" \
             .
